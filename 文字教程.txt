@@ -1,0 +1,24 @@
+第一步
+	点击setup-and-start.bat
+
+		如果出现[警告] 未检测到Node.js环境！
+				提示：后续npm命令可能无法执行
+				就去下一个node.js  
+				https://nodejs.org/zh-cn    下载安装即可
+		如果提示[状态] Node.js 已安装就按任意键继续执行脚本
+		
+	然后等待下载全部依赖
+	完成后按任意键退出脚本
+
+
+第二步
+	点击start-lan.bat
+	
+	弹出的最后一个命令窗口即为本地部署的ip地址
+	单人游玩可ctrl加左键点击 	Local:地址
+	局域网联机则ctrl加左键点击	Network:地址
+
+
+
+
+如果停止游玩关闭所有命令窗口并点击stop-app.bat即可

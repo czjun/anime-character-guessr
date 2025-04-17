@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 echo 正在停止动漫角色猜谜游戏服务...
 
 REM 设置颜色

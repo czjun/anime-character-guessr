@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 setlocal EnableDelayedExpansion
 echo 启动动漫角色猜谜游戏局域网服务...
 
@@ -74,6 +75,4 @@ echo 本地客户端地址: http://localhost:5173
 echo.
 echo 请告知其他玩家使用此URL连接: http://%IP%:5173
 echo 请确保Windows防火墙已允许Node.js应用通过
-echo 请确保已在data_server/.env文件中配置有效的MongoDB连接字符串
-
 pause 
