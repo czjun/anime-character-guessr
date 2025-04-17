@@ -27,7 +27,7 @@
 
 
 
-## 🛠️ 部署指南（[文字教程](https://github.com/czjun/anime-character-guessr/blob/main/%E6%96%87%E5%AD%97%E6%95%99%E7%A8%8B.txt)）
+## 🛠️ 部署指南（[文字教程](https://github.com/czjun/anime-character-guessr/blob/master/%E6%96%87%E5%AD%97%E6%95%99%E7%A8%8B.txt)）
 1.下载压缩包并解压
 
 2.点击setup-and-start.bat安装相关依赖（请确保安装了node.js）耐心等待出现‘Press any key to continue . . .’时间大约1min
