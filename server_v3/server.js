@@ -12,7 +12,7 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3000';
 
 const cors_options = {
-    origin: [CLIENT_URL, SERVER_URL],
+    origin: '*',
     methods: ['GET', 'POST'],
     credentials: true
 }
