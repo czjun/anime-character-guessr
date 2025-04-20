@@ -47,6 +47,15 @@ echo.>> client_v3\.env.lan
 echo # AES加密密钥>> client_v3\.env.lan
 echo VITE_AES_SECRET=my-secret-key>> client_v3\.env.lan
 
+:: 创建服务器环境变量文件
+echo 创建服务器环境变量文件...
+echo # 服务器端口> server_v3\.env.lan
+echo PORT=3000>> server_v3\.env.lan
+echo.>> server_v3\.env.lan
+echo # 客户端URL（用于CORS）>> server_v3\.env.lan
+echo CLIENT_URL=http://!USER_IP!:5173>> server_v3\.env.lan
+echo SERVER_URL=http://!USER_IP!:3000>> server_v3\.env.lan
+
 :: 创建临时vite配置文件
 echo 创建Vite配置文件...
 echo import { defineConfig } from 'vite'> client_v3\vite.config.lan.js
@@ -70,7 +79,7 @@ echo 等待数据服务器启动...
 timeout /t 3 /nobreak > nul
 
 echo 启动游戏服务器...
-start "游戏服务器" cmd /c "cd server_v3 && node server.js"
+start "游戏服务器" cmd /c "cd server_v3 && set NODE_ENV=lan && node -r dotenv/config server.js dotenv_config_path=.env.lan"
 
 echo 等待游戏服务器启动...
 timeout /t 3 /nobreak > nul

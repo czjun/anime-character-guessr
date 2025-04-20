@@ -9,11 +9,8 @@ const PORT = process.env.PORT || 3001;
 
 const cors_options = {
   origin: [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'https://anime-character-guessr.onrender.com',
-    'https://anime-character-guessr.vercel.app',
-    'https://anime-character-guessr.netlify.app'
+    '*'
+    
   ],
   methods: ['GET', 'POST'],
   credentials: true
