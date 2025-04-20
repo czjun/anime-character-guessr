@@ -1,0 +1,15 @@
+{
+  "name": "anime-character-guessr",
+  "version": "1.0.0",
+  "description": "动漫角色猜谜游戏",
+  "scripts": {
+    "client": "cd client_v3 && npm run dev",
+    "server": "cd server_v3 && npm run dev",
+    "data-server": "cd data_server && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run data-server\" \"npm run client\"",
+    "install-all": "npm install && cd client_v3 && npm install && cd ../server_v3 && npm install && cd ../data_server && npm install"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+} 
