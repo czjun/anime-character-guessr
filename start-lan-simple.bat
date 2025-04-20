@@ -14,22 +14,69 @@ echo.
 echo 正在关闭现有服务...
 taskkill /f /im node.exe >nul 2>&1
 
-:: 显示所有IP地址
+:: 提取并显示所有IPv4地址
 echo 您的本机IP地址信息:
 echo.
-ipconfig | findstr /i "IPv4"
+echo [选择序号] IP地址
+echo -------------------
+
+set "index=0"
+set "iplist="
+
+:: 创建临时文件存储IP信息
+ipconfig | findstr /i "IPv4" > "%TEMP%\iplist.txt"
+
+:: 读取IP列表并为每个IP分配序号
+for /f "tokens=*" %%a in (%TEMP%\iplist.txt) do (
+  set /a index+=1
+  set "line=%%a"
+  set "ip=!line:*: =!"
+  echo [!index!] !ip!
+  set "iplist=!iplist!!ip!,"
+)
+
+:: 删除临时文件
+del "%TEMP%\iplist.txt" >nul 2>&1
+
 echo.
-echo 请使用上方列出的IP地址供其他设备连接
-echo 通常是192.168开头的地址或者以太网适配器的地址
+echo 请输入IP地址前面的序号来选择要使用的IP地址
+echo 例如: 输入"2"选择列表中第2个IP地址
+echo 通常选择以192.168开头的地址用于局域网连接
 echo.
 
-echo 请输入您要使用的IP地址:
-set /p USER_IP="> "
+:: 用户输入IP序号
+set /p USER_SELECTION="请输入序号> "
 
-:: 如果用户未输入任何内容，则使用默认值
-if "!USER_IP!"=="" (
+:: 检查是否输入有效
+if "!USER_SELECTION!"=="" (
   set USER_IP=localhost
-  echo 未输入IP地址，将使用默认值: localhost
+  echo 未输入序号，将使用默认值: localhost
+) else (
+  :: 检查输入是否为数字且在范围内
+  set "valid=true"
+  set "num=!USER_SELECTION!"
+  for /f "delims=0123456789" %%i in ("!num!") do set "valid=false"
+  
+  if not "!valid!"=="true" (
+    echo 无效输入，将使用默认值: localhost
+    set USER_IP=localhost
+  ) else if !num! LSS 1 (
+    echo 序号太小，将使用默认值: localhost
+    set USER_IP=localhost
+  ) else if !num! GTR !index! (
+    echo 序号超出范围，将使用默认值: localhost
+    set USER_IP=localhost
+  ) else (
+    :: 根据序号获取对应的IP
+    set "count=0"
+    for /f "tokens=*" %%a in ('ipconfig ^| findstr /i "IPv4"') do (
+      set /a count+=1
+      if !count!==!num! (
+        set "line=%%a"
+        set "USER_IP=!line:*: =!"
+      )
+    )
+  )
 )
 
 echo.
@@ -79,7 +126,7 @@ echo 等待数据服务器启动...
 timeout /t 3 /nobreak > nul
 
 echo 启动游戏服务器...
-start "游戏服务器" cmd /c "cd server_v3 && set CLIENT_URL=http://!USER_IP!:5173 && set SERVER_URL=http://!USER_IP!:3000 && node server.js"
+start "游戏服务器" cmd /c "cd server_v3 && set NODE_ENV=lan && node -r dotenv/config server.js dotenv_config_path=.env.lan"
 
 echo 等待游戏服务器启动...
 timeout /t 3 /nobreak > nul
@@ -93,7 +140,10 @@ echo 局域网访问信息：
 echo - 本机访问: http://localhost:5173
 echo - 局域网设备访问: http://!USER_IP!:5173
 echo.
-echo 如果无法连接，请检查防火墙设置并确保允许应用程序通过防火墙。
+echo 如果您的局域网设备无法访问游戏：
+echo 1. 确保设备连接到同一网络
+echo 2. 检查防火墙设置并确保允许应用程序通过防火墙
+echo 3. 尝试使用另一个IP地址重新启动
 echo.
 goto :normal_exit
 
