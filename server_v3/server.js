@@ -12,7 +12,7 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3000';
 
 const cors_options = {
-    origin: '*', // 允许所有来源
+    origin: '*', //    允许所有来源
     methods: ['GET', 'POST'],
     credentials: true
 }
